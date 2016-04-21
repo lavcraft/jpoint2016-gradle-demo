@@ -13,7 +13,7 @@ class DependencyIncludeProcessor extends IncludeProcessor {
   //TODO WTF .. we need to avoid static project set... However, maybe it is right way :)
   @Delegate
   public static Project project
-  public static boolean debug
+  public static boolean debug = true
 
   DependencyIncludeProcessor() {
     super([:])
@@ -38,9 +38,7 @@ class DependencyIncludeProcessor extends IncludeProcessor {
 
     String content
 
-    def artifact
-
-    artifact = configurations.docs.resolvedConfiguration.resolvedArtifacts.find {
+    def artifact = configurations.docs.resolvedConfiguration.resolvedArtifacts.find {
       def version = it.moduleVersion.id
 
       if (dependencyName.startsWith(':'))

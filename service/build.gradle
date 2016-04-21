@@ -1,1 +1,1 @@
-apply plugin: 'groovy'apply plugin: DocumentationPluginapply plugin: DocumentationRulesdependencies {  compile gradleApi()}model {  documentation(Documentation)}
+apply plugin: 'groovy'dependencies {  compile gradleApi()}
