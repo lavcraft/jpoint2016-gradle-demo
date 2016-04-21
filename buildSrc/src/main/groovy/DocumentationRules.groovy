@@ -1,3 +1,4 @@
+import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.api.tasks.bundling.Zip
@@ -8,12 +9,14 @@ import org.gradle.model.RuleSource
  * Created by aleksandr on 16.04.16.
  */
 class DocumentationRules extends RuleSource {
-    public static final String DOCUMENTATION_DIST_TASK_NAME = 'documentationDistZipNew'
+    @Mutate void setup(Project project) {
+        documentation.name = 'mydoc'
+    }
 
-    @Mutate void create (ModelMap<Task> tasks, Documentation documentation, ExtensionContainer extensionContainer) {
-        tasks.create(DOCUMENTATION_DIST_TASK_NAME, Zip) {
-            group 'Documentation'
-            description 'Create documentation sources archive'
+    @Mutate void createTasks(ModelMap<Task> tasks, Documentation documentation, ExtensionContainer extensionContainer) {
+        tasks.create("distributionZipNew", Zip) {
+            group documentation.name
+            description 'bla bla bla'
         }
     }
 }

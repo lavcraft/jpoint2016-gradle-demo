@@ -1,0 +1,36 @@
+sourceSets {
+    test {
+        groovy.srcDir file('src/functTest/groovy')
+        resources.srcDir file('src/functTest/resources')
+        compileClasspath += sourceSets.main.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+task createClasspathManifest {
+    def outputDir = sourceSets.test.output.resourcesDir
+
+    inputs.files sourceSets.main.runtimeClasspath
+    outputs.dir outputDir
+
+    doLast {
+        outputDir.mkdirs()
+        file("$outputDir/plugin-classpath.txt").text = sourceSets.main.runtimeClasspath.join("\n")
+    }
+}
+
+test.dependsOn createClasspathManifest
+
+idea.module {
+    sourceSets.test.allSource.srcDirs.each {
+        testSourceDirs += it
+    }
+
+    scopes.TEST.plus += [configurations.testCompile]
+    scopes.TEST.plus += [configurations.testRuntime]
+}
+
+dependencies {
+    testCompile gradleTestKit()
+    testCompile files(createClasspathManifest)
+}

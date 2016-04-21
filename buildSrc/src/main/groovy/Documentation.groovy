@@ -4,5 +4,6 @@ import org.gradle.model.Managed
  */
 @Managed
 interface Documentation {
-
+    void setName(String name)
+    String getName()
 }

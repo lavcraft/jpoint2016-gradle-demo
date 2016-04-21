@@ -18,7 +18,7 @@ class TestSpecification extends Specification {
     def setup() {
         buildFile = testProjectDir.newFile('build.gradle')
 
-        def pluginClasspathResource = new File('/Users/aleksandr/github/jpoint2016-gradle/buildSrc/build/createClasspathManifest/plugin-classpath.txt')//getClass().classLoader.findResource("plugin-classpath.txt")
+        def pluginClasspathResource = getClass().classLoader.findResource("plugin-classpath.txt")
         if (pluginClasspathResource == null) {
             throw new IllegalStateException("Did not find plugin classpath resource, run `testClasses` build task.")
         }
@@ -63,7 +63,6 @@ class TestSpecification extends Specification {
                 .build()
 
         then:
-        //result.output.contains('Hello world!')
         result.task(":documentationDistZip").outcome == TaskOutcome.UP_TO_DATE
     }
 }
