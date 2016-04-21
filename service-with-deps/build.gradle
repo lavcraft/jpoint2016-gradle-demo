@@ -1,1 +1,17 @@
 apply plugin: 'base'
+
+configurations {
+  documentationConfiguration
+}
+
+task dist(type: Zip) {
+  from fileTree(dir: file('src/docs/'), include: '**/*.adoc')
+}
+
+artifacts {
+  documentationConfiguration dist
+}
+
+dependencies {
+  documentationConfiguration project(path: ':service', configuration: 'documentationConfiguration')
+}

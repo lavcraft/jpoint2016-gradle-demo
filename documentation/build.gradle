@@ -1,3 +1,5 @@
+import org.asciidoctor.extension.DependencyIncludeProcessor
+
 apply plugin: 'org.asciidoctor.convert'
 
 asciidoctorj {
@@ -5,6 +7,31 @@ asciidoctorj {
   groovyDslVersion = '1.0.0.Alpha1'
 }
 
+configurations {
+  docs
+}
+asciidoctor {
+  sourceDir project.projectDir
+
+  sources {
+    setIncludes fileTree(dir: projectDir, include: '**/*.adoc').collect { relativePath(it) }
+  }
+
+  outputDir = new File("$buildDir/docs")
+  attributes(['source-highlighter': 'coderay',
+              doctype             : 'book',
+              toc                 : 'left',
+              idprefix            : '',
+              idseparator         : '-'])
+
+  inputs.file configurations.docs.incoming.collect { it.files }
+
+  afterEvaluate {
+    DependencyIncludeProcessor.project = project
+  }
+}
+
 dependencies {
   asciidoctor 'org.asciidoctor:asciidoctorj:1.5.4'
+  docs project(path: ':service-with-deps', configuration: 'documentationConfiguration')
 }

@@ -38,7 +38,15 @@ class DependencyIncludeProcessor extends IncludeProcessor {
 
     String content
 
-    def artifact //TODO resolve this var
+    def artifact = configurations.docs.resolvedConfiguration.resolvedArtifacts.find {
+      def version = it.moduleVersion.id
+
+      if (dependencyName.startsWith(':'))
+        return version.name == dependencyName.replace(':', '')
+      else {
+        return dependencyName == version.toString()
+      }
+    }
 
     if (!artifact) {
       logger.warn 'Dependency {} not found', dependencyName
