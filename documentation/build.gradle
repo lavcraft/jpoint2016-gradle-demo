@@ -1,6 +1,10 @@
 apply plugin: 'org.asciidoctor.convert'
 apply plugin: DocumentationPlugin
 
+docs {
+  debug = true
+}
+
 dependencies {
   asciidoctor 'org.asciidoctor:asciidoctorj:1.5.4'
 }
