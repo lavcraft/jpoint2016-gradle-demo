@@ -1,5 +1,5 @@
 apply plugin: 'base'
-apply plugin: DocumentationPlugin
+apply plugin: 'ru.jpoint.documentation'
 
 dependencies {
   documentationConfiguration project(path: ':service', configuration: 'documentationConfiguration')

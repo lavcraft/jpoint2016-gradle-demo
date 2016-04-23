@@ -1,9 +1,25 @@
+buildscript {
+  repositories {
+    jcenter()
+
+    maven {
+      url "https://dl.bintray.com/aatarasoff/maven"
+    }
+  }
+
+  dependencies {
+    classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+    classpath 'info.developerblog:documentation-plugin:0.0.1'
+  }
+}
+
 allprojects { p ->
   repositories {
     jcenter()
   }
 
   apply plugin: 'idea'
+  apply plugin: 'ru.jpoint.documentation'
 }
 
 task wrapper(type: Wrapper) {
